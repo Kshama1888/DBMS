@@ -1,0 +1,37 @@
+db.comments.insert({  
+    'name': 'Harry',  
+    'lang': 'JavaScript', 
+    'member_since': 5  
+  })
+
+db.comments.insertMany([{     
+'name': 'Harry',  
+    'lang': 'JavaScript',  
+    'member_since': 5  
+    },   
+    {'name': 'Rohan',  
+    'lang': 'Python',  
+    'member_since': 3  
+    },  
+    {'name': 'Lovish',  
+    'lang': 'Java',  
+    'member_since': 4  
+}]) 
+
+db.comments.find({lang:'Python'}) 
+
+db.comments.updateOne({name: 'Shubham'},  
+{$set: {'name': 'Harry',  
+    'lang': 'JavaScript',  
+    'member_since': 51  
+}}, {upsert: true})  
+
+ db.comments.update({name: 'Rohan'},  
+{$rename:{  
+    member_since: 'member'  
+}})  
+  
+  
+ 7 .Delete 
+Row  
+ db.comments.remove({name: 'Harry'}) 
