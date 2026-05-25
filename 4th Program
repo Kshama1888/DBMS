@@ -1,0 +1,50 @@
+show databases;  
+create database dbms;  
+use 
+dbms;   
+mysql> CREATE TABLE customers (  ->     ID INT AUTO_INCREMENT PRIMARY KEY,  ->     NAME VARCHAR(100),  ->     AGE INT,  ->     ADDRESS VARCHAR(255),  ->     SALARY DECIMAL(10, 2)  -> );  
+Query OK, 0 rows affected (0.04 sec)  
+mysql> INSERT INTO customers (NAME, AGE, ADDRESS, SALARY) VALUES  ->     ('John Doe', 30, '123 Main St, Anytown, USA', 
+50000.00),  ->     ('Jane Smith', 25, '456 Elm St, Othertown, USA', 
+60000.00),  ->     ('Alice Johnson', 35, '789 Oak St, Anycity, USA', 
+70000.00),  ->     ('Bob Brown', 40, '321 Pine St, Anothercity, USA', 
+55000.00),  ->     ('Emily Davis', 28, '654 Maple St, Somewhere, USA', 
+65000.00),  ->     ('Michael Wilson', 45, '987 Cedar St, Nowhere, USA', 
+75000.00),  ->     ('Sarah Miller', 32, '159 Birch St, Anyplace, USA', 
+62000.00),  ->     ('David Jones', 38, '852 Walnut St, Elsewhere, USA', 
+68000.00),  ->     ('Jennifer Taylor', 27, '753 Cherry St, Elsewhere,  
+USA', 59000.00),  ->     ('William Anderson', 33, '369 Oak St, Somewhere,  
+USA', 71000.00);  
+Query OK, 10 rows affected (0.01 sec)  
+Records: 10  Duplicates: 0  Warnings: 0 
+mysql> select *from customers;  
++----+------------------+------+-------------------------------+----------+  
+| ID | NAME             | AGE  | ADDRESS                       | SALARY   
+|  
++----+------------------+------+-------------------------------+----------+  
+|  1 | John Doe         |   30 | 123 Main St, Anytown, USA     | 50000.00 |  
+|  2 | Jane Smith       |   25 | 456 Elm St, Othertown, USA    | 60000.00 |  
+|  3 | Alice Johnson    |   35 | 789 Oak St, Anycity, USA      | 70000.00 |  
+|  4 | Bob Brown        |   40 | 321 Pine St, Anothercity, USA | 55000.00 |  
+|  5 | Emily Davis      |   28 | 654 Maple St, Somewhere, USA  | 65000.00 |  
+|  6 | Michael Wilson   |   45 | 987 Cedar St, Nowhere, USA    | 75000.00 |  
+|  7 | Sarah Miller     |   32 | 159 Birch St, Anyplace, USA   | 62000.00 |  
+|  8 | David Jones      |   38 | 852 Walnut St, Elsewhere, USA | 68000.00 |  
+|  9 | Jennifer Taylor  |   27 | 753 Cherry St, Elsewhere, USA | 59000.00 | | 
+10 | William Anderson |   33 | 369 Oak St, Somewhere, USA    | 71000.00 |  
+10 rows in set (0.00 sec)  
+mysql> DELIMITER // mysql>   
+mysql> CREATE TRIGGER display_salary_changes_insert  -> BEFORE INSERT ON customers  -> FOR EACH ROW  -> BEGIN  ->     INSERT INTO salary_changes_log (customer_id, 
+old_salary, new_salary, change_time)  ->     VALUES (NEW.ID, NULL, NEW.salary, NOW());  -> END//  
+Query OK, 0 rows affected (0.01 sec)  
+mysql>   
+mysql> CREATE TRIGGER display_salary_changes_update  -> BEFORE UPDATE ON customers  -> FOR EACH ROW  -> BEGIN  ->     INSERT INTO salary_changes_log (customer_id, 
+old_salary, new_salary, change_time)  ->     VALUES (NEW.ID, OLD.salary, NEW.salary, NOW());  -> END//  
+Query OK, 0 rows affected (0.01 sec)  
+mysql>   
+mysql> CREATE TRIGGER display_salary_changes_delete  -> BEFORE DELETE ON customers  -> FOR EACH ROW  -> BEGIN  ->     INSERT INTO salary_changes_log (customer_id, 
+old_salary, new_salary, change_time)  ->     VALUES (OLD.ID, OLD.salary, NULL, NOW()); 
+-> END//  
+Query OK, 0 rows affected (0.01 sec   
+mysql> DELIMITER ;  
+mysql> SHOW TRIGGERS;
