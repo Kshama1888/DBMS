@@ -1,0 +1,95 @@
+Create Department Table (Parent Table):
+
+CREATE TABLE Department1 (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50)
+);
+
+ Create Student Table (Child Table):
+
+CREATE TABLE Student1 (
+    Stu_ID INT PRIMARY KEY,
+    Stu_Name VARCHAR(50),
+    Dept_ID INT,
+    FOREIGN KEY (Dept_ID) REFERENCES Department(Dept_ID)
+);
+
+ Insert Data into Department:
+
+INSERT INTO Department1 VALUES (1, 'Computer Science');
+INSERT INTO Department1 VALUES (2, 'Mechanical');
+INSERT INTO Department1 VALUES (3, 'Electrical');
+INSERT INTO Department1 VALUES (4, 'Civil');
+
+Insert Data into Student:
+
+INSERT INTO Student1 VALUES (101, 'Alice', 1);
+INSERT INTO Student1 VALUES (102, 'Bob', 2);
+INSERT INTO Student1 VALUES (103, 'Charlie', 1);
+INSERT INTO Student1 VALUES (104, 'John', 3);
+INSERT INTO Student1 VALUES (105, 'Smith', 4);
+
+ Display Data using JOIN:
+
+SELECT Student1.Stu_ID, Student1.Stu_Name, Department1.Dept_Name
+FROM Student1
+INNER JOIN Department1
+ON Student1.Dept_ID = Department1.Dept_ID;
+
+ Alter table Student1
+     ADD CONSTRAINT fk_deptt
+     FOREIGN KEY(Dept_ID)
+     REFERENCES Department1(Dept_ID)
+     ON DELETE CASCADE
+     ON UPDATE CASCADE;
+
+ delete from Department1 where Dept_ID=1;
+
+Alter table Student1
+     ADD CONSTRAINT fk_dep
+     FOREIGN KEY(Dept_ID)
+     REFERENCES Department1(Dept_ID)
+     ON DELETE SET NULL
+     ON UPDATE CASCADE;
+
+Alter table Student1
+     ADD CONSTRAINT fk_department
+     FOREIGN KEY(Dept_ID)
+     REFERENCES Department1(Dept_ID)
+     ON DELETE Restrict
+     ON UPDATE CASCADE;
+
+delete from Department1 where Dept_ID=1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Student1;
++--------+----------+---------+
+| Stu_ID | Stu_Name | Dept_ID |
++--------+----------+---------+
+|    104 | John     |       3 |
++--------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> Update Department1
+      SET Dept_ID=1
+      WHERE Dept_ID=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Department1;
++---------+------------+
+| Dept_ID | Dept_Name  |
++---------+------------+
+|       1 | Electrical |
+|       2 | Mechanical |
+|       4 | Civil      |
++---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Student1;
++--------+----------+---------+
+| Stu_ID | Stu_Name | Dept_ID |
++--------+----------+---------+
+|    104 | John     |       1 |
++--------+----------+---------+
+1 row in set (0.00 sec)
