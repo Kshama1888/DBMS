@@ -1,0 +1,22 @@
+-- Step 1: Create the Employee table with attributes EMPNO, ENAME, JOB, MGR, SAL  
+CREATE TABLE Employee (  
+EMPNO INT,  
+ENAME VARCHAR(50),  
+JOB VARCHAR(50),  
+MGR INT,  
+SAL DECIMAL(10, 2)  
+);  -- Step 2: Add a column commission to the Employee table  
+ALTER TABLE Employee  
+ADD COLUMN COMMISSION DECIMAL(10, 2);  -- Step 3: Insert five records into the table  
+INSERT INTO Employee (EMPNO, ENAME, JOB, MGR, SAL, COMMISSION) VALUES  
+(101, 'John Doe', 'Manager', NULL, 5000.00, NULL),  
+(102, 'Jane Smith', 'Developer', 101, 4000.00, NULL),  
+(103, 'Alice Johnson', 'Designer', 101, 4500.00, NULL),  
+(104, 'Bob Brown', 'Analyst', 101, 4200.00, NULL),  
+(105, 'Emma Wilson', 'Tester', 102, 3800.00, NULL); 
+-- Step 4: Update the column details of the JOB column 
+UPDATE Employee  
+SET JOB = CONCAT('Senior ', JOB);  -- Step 5: Rename the column MGR to MANAGER_NO  
+ALTER TABLE Employee  
+CHANGE COLUMN MGR MANAGER_NO INT;  -- Step 6: Delete the employee whose EMPNO is 105  
+DELETE FROM Employee WHERE EMPNO = 105; 
